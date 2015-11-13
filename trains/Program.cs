@@ -11,8 +11,7 @@ namespace trains
         static void Main(string[] args)
         {
             var loader = new InputDataLoader();
-
-            // when run from VS, cwd is [...]/SAO/SAO/bin/Debug
+            
             var input = loader.LoadInput("../../../input/input04.txt");
 
             var routs = input.Item1;
