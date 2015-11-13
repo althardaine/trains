@@ -51,6 +51,8 @@
     <Compile Include="Structures\Routes.cs" />
     <Compile Include="Structures\Solution.cs" />
     <Compile Include="Structures\Specimen.cs" />
+    <Compile Include="Utils\Extensions.cs" />
+    <Compile Include="Utils\InputDataLoader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

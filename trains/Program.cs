@@ -43,7 +43,7 @@ namespace trains
                 poolOfSpecimens,
                 random);
 
-            solution.Execute();
+            solution.Calculate();
 
             Console.WriteLine("Value: " + solution.BestResult.Value);
             Console.WriteLine("Solution:");

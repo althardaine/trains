@@ -35,7 +35,7 @@ namespace trains.Structures
         public IMutation Mutation { get; private set; }
         public ICrossover Crossover { get; private set; }
 
-        public void Execute()
+        public void Calculate()
         {
             GenerateRandomPopulation();
             for (var i = 0; i < NumberOfIterations; i++)
