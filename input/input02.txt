@@ -16,7 +16,5 @@ numberOfBuses=300
 busCapacity=1
 numberOfIterations=8000
 poolOfSpecimens=40
-
 mutationChance=20
-crossoverBernoulli=0.4
 crossoverChance=10

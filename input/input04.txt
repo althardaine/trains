@@ -20,5 +20,4 @@ numberOfBuses=1000
 numberOfIterations=40000
 poolOfSpecimens=40
 mutationChance=20
-crossoverBernoulli=0.4
 crossoverChance=70
