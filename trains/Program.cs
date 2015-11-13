@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using trains.Structures;
 using trains.Structures.Crossovers;
 using trains.Structures.Mutations;
+using trains.Utils;
 
 namespace trains
 {
@@ -10,28 +10,28 @@ namespace trains
     {
         static void Main(string[] args)
         {
-            var routs = new Routes("0:10,1:40,2:20,3:10,4:40,5:20,6:60,7:50,8:10,9:20,10:10");
-            var lines = new List<Line>
-            {
-                new Line("0:0,1,2,7,8,9,10"),
-                new Line("1:4,6,8,9,10"),
-                new Line("2:3,7,6,5"),
-                new Line("3:0,1,4,5")
-            };
+            var loader = new InputDataLoader();
 
-            const int numberOfBuses = 10;
-            const int busCapacity = 5;
-            const int numberOfIterations = 40;
-            const int poolOfSpecimens = 20;
+            // when run from VS, cwd is [...]/SAO/SAO/bin/Debug
+            var input = loader.LoadInput("../../../input/input04.txt");
 
-            const int mutationChance = 2;
-            const int crossoverChance = 100;
+            var routs = input.Item1;
+            var lines = input.Item2;
+
+            var c = input.Item3;
+
+            var numberOfBuses = c.GetIntOrDefault("numberOfBuses", 200);
+            var busCapacity = c.GetIntOrDefault("busCapacity", 5);
+            var numberOfIterations = c.GetIntOrDefault("numberOfIterations", 40);
+            var poolOfSpecimens = c.GetIntOrDefault("poolOfSpecimens", 20);
+
+            var mutationChance = c.GetIntOrDefault("mutationChance", 20);
+            var crossoverChance = c.GetIntOrDefault("crossoverChance", 10);
 
             var random = new Random();
 
             var mutationType = new Mutation(mutationChance);
             var crossoverType = new Crossover(10, crossoverChance, random);
-
 
             var solution = new Solution(
                 routs, lines,
