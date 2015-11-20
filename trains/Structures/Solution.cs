@@ -46,10 +46,14 @@ namespace trains.Structures
                 {
                     nextPopulation.Add(new Specimen(Routes, Lines, NumberOfBuses, BusCapacity, _random));
                 }
-                for (var j = 0; j < PoolOfSpeciemens/2; j += 2)
-                {
-                    nextPopulation.Add(Mutation.Execute(Crossover.Execute(_specimens[j], _specimens[j + 1])));
-                }
+ 
+                    nextPopulation.AddRange(
+                        _specimens.OrderBy(s => Guid.NewGuid())
+                                  .Take(_specimens.Count / 2)
+                                  .Zip(_specimens,
+                                       (a, b) => Mutation.Execute(Crossover.Execute(a, b))));
+//                    nextPopulation.Add(Mutation.Execute(Crossover.Execute(_specimens[j], _specimens[j + 1])));
+//                }
                 _specimens = nextPopulation;
                 FindBest();
             }

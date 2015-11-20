@@ -21,18 +21,19 @@ namespace trains
 
             var numberOfBuses = c.GetIntOrDefault("numberOfBuses", 200);
             var busCapacity = c.GetIntOrDefault("busCapacity", 5);
-            var numberOfIterations = c.GetIntOrDefault("numberOfIterations", 400);
+            var numberOfIterations = c.GetIntOrDefault("numberOfIterations", 4000);
             var poolOfSpecimens = c.GetIntOrDefault("poolOfSpecimens", 20);
 
-            var mutationChance = c.GetIntOrDefault("mutationChance", 20);
+            var mutationChance = c.GetIntOrDefault("mutationChance", 10);
             var crossoverChance = c.GetIntOrDefault("crossoverChance", 10);
 
             var random = new Random();
 
             var mutationType = new Mutation(mutationChance);
             var crossoverType = new Crossover(10, crossoverChance, random);
-
-            var solution = new Solution(
+            for (var i = 0; i < 10; i++)
+            {
+                var solution = new Solution(
                 routs, lines,
                 mutationType,
                 crossoverType,
@@ -41,12 +42,15 @@ namespace trains
                 numberOfIterations,
                 poolOfSpecimens,
                 random);
+                solution.Calculate();
 
-            solution.Calculate();
-
-            Console.WriteLine("Value: " + solution.BestResult.Value);
-            Console.WriteLine("Solution:");
-            solution.BestResult.Distribution.ForEach(Console.WriteLine);
+                Console.WriteLine("Value: " + solution.BestResult.Value);
+            }
+            
+//
+//            
+//            Console.WriteLine("Solution:");
+//            solution.BestResult.Distribution.ForEach(Console.WriteLine);
 
             Console.ReadLine();
         }
