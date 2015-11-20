@@ -12,7 +12,7 @@ namespace trains
         {
             var loader = new InputDataLoader();
             
-            var input = loader.LoadInput("../../../input/input04.txt");
+            var input = loader.LoadInput("../../../input/input_lolwut.txt");
 
             var routs = input.Item1;
             var lines = input.Item2;
@@ -21,7 +21,7 @@ namespace trains
 
             var numberOfBuses = c.GetIntOrDefault("numberOfBuses", 200);
             var busCapacity = c.GetIntOrDefault("busCapacity", 5);
-            var numberOfIterations = c.GetIntOrDefault("numberOfIterations", 40);
+            var numberOfIterations = c.GetIntOrDefault("numberOfIterations", 400);
             var poolOfSpecimens = c.GetIntOrDefault("poolOfSpecimens", 20);
 
             var mutationChance = c.GetIntOrDefault("mutationChance", 20);
