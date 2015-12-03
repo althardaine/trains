@@ -49,26 +49,11 @@ namespace trains.Structures
         private void SetRandomDistribution()
         {
             Distribution = Enumerable.Repeat(0, Problem.NumberOfBuses).ToList();
-            int busesDeployed = 0;
 
-            for (int _ = 0; _ < Problem.NumberOfBuses; ++_)
+            int busesToDeploy = Random.Next(0, Problem.NumberOfBuses);
+            for (int _ = 0; _ < busesToDeploy; ++_)
             {
                 ++Distribution[Random.Next(Distribution.Count)];
-            }
-
-            for (int lineIdx = 0; lineIdx < Problem.Lines.Count(); ++lineIdx)
-            {
-                int toAdd = Random.Next(0, Problem.NumberOfBuses - busesDeployed + 1);
-                Distribution.Add(toAdd);
-                busesDeployed += toAdd;
-            }
-
-            for (var i = 0; i < Problem.Lines.Count; i++)
-            {
-                var toSwap = Random.Next(0, Problem.Lines.Count - 1);
-                var tmp = Distribution[toSwap];
-                Distribution[toSwap] = Distribution[i];
-                Distribution[i] = tmp;
             }
         }
 
