@@ -15,10 +15,10 @@ namespace trains
             {
                 Solution solution = solver.Solve(problem);
                 Console.WriteLine("Value: " + solution.Value);
-            }
 
-            //Console.WriteLine("Solution:");
-            //solution.BestResult.Distribution.ForEach(Console.WriteLine);
+                //Console.WriteLine("Solution:");
+                //solution.Distribution.ForEach(Console.WriteLine);
+            }
 
             Console.WriteLine("finished");
             Console.ReadLine();

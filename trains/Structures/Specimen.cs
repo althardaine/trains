@@ -48,15 +48,19 @@ namespace trains.Structures
 
         private void SetRandomDistribution()
         {
-            Distribution = new List<int>();
-            int[] leftSpace = { Problem.Lines.Count };
-            int[] sum = { 0 };
+            Distribution = Enumerable.Repeat(0, Problem.NumberOfBuses).ToList();
+            int busesDeployed = 0;
 
-            foreach (var toAdd in Problem.Lines.Select(line => Random.Next(1, (Problem.NumberOfBuses - sum[0]) / leftSpace[0])))
+            for (int _ = 0; _ < Problem.NumberOfBuses; ++_)
             {
+                ++Distribution[Random.Next(Distribution.Count)];
+            }
+
+            for (int lineIdx = 0; lineIdx < Problem.Lines.Count(); ++lineIdx)
+            {
+                int toAdd = Random.Next(0, Problem.NumberOfBuses - busesDeployed + 1);
                 Distribution.Add(toAdd);
-                sum[0] += toAdd;
-                leftSpace[0] -= 1;
+                busesDeployed += toAdd;
             }
 
             for (var i = 0; i < Problem.Lines.Count; i++)
