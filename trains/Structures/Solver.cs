@@ -29,7 +29,7 @@ namespace trains.Structures
                     .Where(s => !string.IsNullOrWhiteSpace(s) && s[0] != '#');
 
                 var cfgDict = textLines.Select(s => s.Split('='))
-                    .ToDictionary(t => t[0], t => t[1]);
+                    .ToDictionary(t => t[0].Trim(), t => t[1].Trim());
 
                 return new Config()
                 {
@@ -39,6 +39,12 @@ namespace trains.Structures
                     singleFeatureCrossoverChance = cfgDict.GetIntOrDefault("singleFeatureCrossoverChance", 10),
                     crossoverChance = cfgDict.GetIntOrDefault("crossoverChance", 10)
                 };
+            }
+
+            public string ToString()
+            {
+                var self = this;
+                return string.Join("\n", GetType().GetFields().Select(f => string.Format("{0} = {1}", f.Name, f.GetValue(self))));
             }
         }
 
