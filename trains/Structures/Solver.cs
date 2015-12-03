@@ -79,6 +79,8 @@ namespace trains.Structures
                 //                }
                 specimens = nextPopulation;
                 bestSpecimen = FindBestSpecimen(specimens).Clone();
+
+                //Console.Error.WriteLine(string.Format("  {0}", bestSpecimen.Value));
             }
 
             return bestSpecimen;

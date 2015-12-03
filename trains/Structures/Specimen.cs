@@ -75,7 +75,7 @@ namespace trains.Structures
 
         public Specimen Clone()
         {
-            return new Specimen(Problem, Random);
+            return new Specimen(this, Distribution.ToList());
         }
     }
 }
