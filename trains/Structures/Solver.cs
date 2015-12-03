@@ -66,7 +66,7 @@ namespace trains.Structures
                 var nextPopulation = specimens.Take(config.specimenPoolSize / 4).ToList();
                 for (var j = 0; j < config.specimenPoolSize / 4; j++)
                 {
-                    nextPopulation.Add(new Specimen(problem.PeoplePerSegments, problem.Lines, problem.NumberOfBuses, problem.BusCapacity, random));
+                    nextPopulation.Add(new Specimen(problem, random));
                 }
 
                 nextPopulation.AddRange(
@@ -87,11 +87,7 @@ namespace trains.Structures
         private List<Specimen> GenerateRandomPopulation(Problem problem)
         {
             return Enumerable.Range(0, config.specimenPoolSize)
-                             .Select(_ => new Specimen(problem.PeoplePerSegments,
-                                                       problem.Lines,
-                                                       problem.NumberOfBuses,
-                                                       problem.BusCapacity,
-                                                       random))
+                             .Select(_ => new Specimen(problem, random))
                              .ToList();
         }
 

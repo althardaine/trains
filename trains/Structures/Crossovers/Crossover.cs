@@ -25,7 +25,7 @@ namespace trains.Structures.Crossovers
             }
 
             var distribution = new List<int>();
-            for (var i = 0; i < specimen1.Lines.Count; i++)
+            for (var i = 0; i < specimen1.Problem.Lines.Count; i++)
             {
                 distribution.Add(specimen1.Distribution[i] <= specimen2.Distribution[i] && _random.Next(0, 100) < _chance
                     ? specimen1.Distribution[i]

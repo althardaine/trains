@@ -23,18 +23,12 @@ namespace trains.Structures
 
     class Specimen: Solution
     {
-        public List<int> Routes { get; private set; }
-        public List<Line> Lines { get; private set; }
-        public int NumberOfBuses { get; private set; }
-        public int BusCapacity { get; private set; }
+        public readonly Problem Problem;
         public Random Random { get; private set; }
 
-        public Specimen(List<int> peoplePerSegment, List<Line> lines, int numberOfBuses, int busCapacity, Random random)
+        public Specimen(Problem problem, Random random)
         {
-            Routes = peoplePerSegment;
-            Lines = lines;
-            NumberOfBuses = numberOfBuses;
-            BusCapacity = busCapacity;
+            Problem = problem;
             Random = random;
             SetRandomDistribution();
             CalculateSpecimentValue();
@@ -42,12 +36,9 @@ namespace trains.Structures
 
         public Specimen(Specimen basis, List<int> distribution)
         {
-            Routes = basis.Routes;
-            Lines = basis.Lines;
-            NumberOfBuses = basis.NumberOfBuses;
-            BusCapacity = basis.BusCapacity;
+            Problem = basis.Problem;
             Random = basis.Random;
-            if (distribution.Count != Lines.Count)
+            if (distribution.Count != Problem.Lines.Count)
             {
                 throw new ArgumentException();
             }
@@ -58,19 +49,19 @@ namespace trains.Structures
         private void SetRandomDistribution()
         {
             Distribution = new List<int>();
-            int[] leftSpace = { Lines.Count };
+            int[] leftSpace = { Problem.Lines.Count };
             int[] sum = { 0 };
 
-            foreach (var toAdd in Lines.Select(line => Random.Next(1, (NumberOfBuses - sum[0]) / leftSpace[0])))
+            foreach (var toAdd in Problem.Lines.Select(line => Random.Next(1, (Problem.NumberOfBuses - sum[0]) / leftSpace[0])))
             {
                 Distribution.Add(toAdd);
                 sum[0] += toAdd;
                 leftSpace[0] -= 1;
             }
 
-            for (var i = 0; i < Lines.Count; i++)
+            for (var i = 0; i < Problem.Lines.Count; i++)
             {
-                var toSwap = Random.Next(0, Lines.Count - 1);
+                var toSwap = Random.Next(0, Problem.Lines.Count - 1);
                 var tmp = Distribution[toSwap];
                 Distribution[toSwap] = Distribution[i];
                 Distribution[i] = tmp;
@@ -79,21 +70,17 @@ namespace trains.Structures
 
         private void CopyDistribution(Specimen toClone)
         {
-            Distribution = new List<int>();
-            foreach (var value in toClone.Distribution)
-            {
-                Distribution.Add(value);
-            }
+            Distribution = toClone.Distribution.ToList();
         }
 
         public void CalculateSpecimentValue()
         {
-            var result = Routes.ToList();
+            var result = Problem.PeoplePerSegments.ToList();
 
-            for (var i = 0; i < Lines.Count; i++)
+            for (var i = 0; i < Problem.Lines.Count; i++)
             {
-                var value = Distribution[i] * BusCapacity;
-                var linesTrace = Lines[i].Trace;
+                var value = Distribution[i] * Problem.BusCapacity;
+                var linesTrace = Problem.Lines[i].Trace;
                 foreach (var pointOnTrace in linesTrace)
                 {
                     var oldValue = result[pointOnTrace];
@@ -105,7 +92,7 @@ namespace trains.Structures
 
         public Specimen Clone()
         {
-            return new Specimen(Routes, Lines, NumberOfBuses, BusCapacity, Random);
+            return new Specimen(Problem, Random);
         }
     }
 }
