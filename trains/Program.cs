@@ -1,8 +1,5 @@
 ﻿using System;
 using trains.Structures;
-using trains.Structures.Crossovers;
-using trains.Structures.Mutations;
-using trains.Utils;
 
 namespace trains
 {

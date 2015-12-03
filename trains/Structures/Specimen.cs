@@ -68,11 +68,6 @@ namespace trains.Structures
             }
         }
 
-        private void CopyDistribution(Specimen toClone)
-        {
-            Distribution = toClone.Distribution.ToList();
-        }
-
         public void CalculateSpecimentValue()
         {
             var result = Problem.PeoplePerSegments.ToList();
