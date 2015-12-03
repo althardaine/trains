@@ -29,7 +29,7 @@ for train in trains:
     for stop in train:
         stops[stop] += solution[-1] * ARGS.train_capacity
 
-print(','.join('%d:%d' % x for x in enumerate(stops)))
+print(','.join(str(x) for x in stops))
 print(ARGS.num_trains)
 print('\n'.join('%d:%s' % (i, ','.join(str(x) for x in path)) for i, path in enumerate(trains)))
 print('')
