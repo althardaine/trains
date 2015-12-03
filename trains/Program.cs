@@ -10,48 +10,20 @@ namespace trains
     {
         static void Main(string[] args)
         {
-            var loader = new InputDataLoader();
-            
-            var input = loader.LoadInput("../../../input/input_lolwut.txt");
+            Problem problem = Problem.LoadFromFile("../../../input/input_lolwut.txt");
+            Solver.Config solverConfig = Solver.Config.LoadFromFile("../../../input/solver.cfg");
+            Solver solver = new Solver(solverConfig);
 
-            var routs = input.Item1;
-            var lines = input.Item2;
-
-            var c = input.Item3;
-
-            var numberOfBuses = c.GetIntOrDefault("numberOfBuses", 200);
-            var busCapacity = c.GetIntOrDefault("busCapacity", 5);
-            var numberOfIterations = c.GetIntOrDefault("numberOfIterations", 4000);
-            var poolOfSpecimens = c.GetIntOrDefault("poolOfSpecimens", 20);
-
-            var mutationChance = c.GetIntOrDefault("mutationChance", 10);
-            var crossoverChance = c.GetIntOrDefault("crossoverChance", 10);
-
-            var random = new Random();
-
-            var mutationType = new Mutation(mutationChance);
-            var crossoverType = new Crossover(10, crossoverChance, random);
             for (var i = 0; i < 10; i++)
             {
-                var solution = new Solution(
-                routs, lines,
-                mutationType,
-                crossoverType,
-                numberOfBuses,
-                busCapacity,
-                numberOfIterations,
-                poolOfSpecimens,
-                random);
-                solution.Calculate();
-
-                Console.WriteLine("Value: " + solution.BestResult.Value);
+                Solution solution = solver.Solve(problem);
+                Console.WriteLine("Value: " + solution.Value);
             }
-            
-//
-//            
-//            Console.WriteLine("Solution:");
-//            solution.BestResult.Distribution.ForEach(Console.WriteLine);
 
+            //Console.WriteLine("Solution:");
+            //solution.BestResult.Distribution.ForEach(Console.WriteLine);
+
+            Console.WriteLine("finished");
             Console.ReadLine();
         }
     }

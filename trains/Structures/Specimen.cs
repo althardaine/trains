@@ -4,35 +4,39 @@ using System.Linq;
 
 namespace trains.Structures
 {
-    public class Specimen
+    public class Solution
     {
-        public List<int> Distribution { get; private set; }
-        public int Value { get; private set; }
-        public Routes Routes { get; private set; }
+        public List<int> Distribution { get; protected set; }
+        public int Value { get; protected set; }
+
+        protected Solution()
+        {
+        }
+
+        internal Solution(List<int> distribution,
+                          int value)
+        {
+            Distribution = distribution;
+            Value = value;
+        }
+    }
+
+    class Specimen: Solution
+    {
+        public List<int> Routes { get; private set; }
         public List<Line> Lines { get; private set; }
         public int NumberOfBuses { get; private set; }
         public int BusCapacity { get; private set; }
         public Random Random { get; private set; }
 
-        public Specimen(Routes routes, List<Line> lines, int numberOfBuses, int busCapacity, Random random)
+        public Specimen(List<int> peoplePerSegment, List<Line> lines, int numberOfBuses, int busCapacity, Random random)
         {
-            Routes = routes;
+            Routes = peoplePerSegment;
             Lines = lines;
             NumberOfBuses = numberOfBuses;
             BusCapacity = busCapacity;
             Random = random;
             SetRandomDistribution();
-            CalculateSpecimentValue();
-        }
-
-        public Specimen(Specimen toClone)
-        {
-            Routes = toClone.Routes;
-            Lines = toClone.Lines;
-            NumberOfBuses = toClone.NumberOfBuses;
-            BusCapacity = toClone.BusCapacity;
-            Random = toClone.Random;
-            CopyDistribution(toClone);
             CalculateSpecimentValue();
         }
 
@@ -84,7 +88,7 @@ namespace trains.Structures
 
         public void CalculateSpecimentValue()
         {
-            var result = Routes.GetCopyOfRoutesValues();
+            var result = Routes.ToList();
 
             for (var i = 0; i < Lines.Count; i++)
             {
@@ -97,6 +101,11 @@ namespace trains.Structures
                 }
             }
             Value = result.Sum(val => Math.Abs(val));
+        }
+
+        public Specimen Clone()
+        {
+            return new Specimen(Routes, Lines, NumberOfBuses, BusCapacity, Random);
         }
     }
 }

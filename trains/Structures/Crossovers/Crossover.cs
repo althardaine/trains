@@ -21,7 +21,7 @@ namespace trains.Structures.Crossovers
         {
             if (_random.Next(0, 100) >= _probability)
             {
-                return specimen1.Value < specimen2.Value ? new Specimen(specimen1) : new Specimen(specimen2);
+                return specimen1.Value < specimen2.Value ? specimen1.Clone() : specimen2.Clone();
             }
 
             var distribution = new List<int>();

@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace trains.Structures.Mutations
 {
-    public class Mutation : IMutation
+    internal class Mutation : IMutation
     {
         private readonly int _chance;
 
