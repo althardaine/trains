@@ -48,13 +48,12 @@ namespace trains.Structures
 
         private void SetRandomDistribution()
         {
-            Distribution = Enumerable.Repeat(0, Problem.NumberOfBuses).ToList();
-
             int busesToDeploy = Random.Next(0, Problem.NumberOfBuses);
-            for (int _ = 0; _ < busesToDeploy; ++_)
-            {
-                ++Distribution[Random.Next(Distribution.Count)];
-            }
+
+            List<int> partitions = Problem.Lines.Select(_ => Random.Next(0, busesToDeploy))
+                                                .OrderBy(_ => _).ToList();
+            partitions.Add(busesToDeploy);
+            Distribution = partitions.Zip(partitions.Skip(1), (low, high) => high - low).ToList();
         }
 
         public void CalculateSpecimentValue()
