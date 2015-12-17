@@ -5,21 +5,21 @@ namespace trains.Structures.Mutations
 {
     internal class Mutation : IMutation
     {
-        private readonly int _chance;
+        private readonly double _chance;
 
-        public Mutation(int percentageChance)
+        public Mutation(double chance)
         {
-            if (percentageChance < 0 || percentageChance > 100)
+            if (chance < 0 || chance > 1)
             {
                 throw new ArgumentException();
             }
-            _chance = percentageChance;
+            _chance = chance;
         }
 
         public Specimen Execute(Specimen specimen)
         {
             var toBeChanged =
-                specimen.Problem.Lines.Select(line => specimen.Random.Next(0, 100))
+                specimen.Problem.Lines.Select(line => specimen.Random.NextDouble())
                     .Select(rolled => rolled < _chance ? 1 : 0)
                     .ToList();
 

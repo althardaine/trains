@@ -15,9 +15,9 @@ namespace trains.Structures
         {
             public int numberOfIterations;
             public int specimenPoolSize;
-            public int mutationChance;
-            public int singleFeatureCrossoverChance;
-            public int crossoverChance;
+            public double mutationChance;
+            public double singleFeatureCrossoverChance;
+            public double crossoverChance;
 
             public static Config LoadFromFile(string path)
             {
@@ -35,9 +35,9 @@ namespace trains.Structures
                 {
                     numberOfIterations = cfgDict.GetIntOrDefault("numberOfIterations", 100),
                     specimenPoolSize = cfgDict.GetIntOrDefault("specimenPoolSize", 100),
-                    mutationChance = cfgDict.GetIntOrDefault("mutationChance", 10),
-                    singleFeatureCrossoverChance = cfgDict.GetIntOrDefault("singleFeatureCrossoverChance", 10),
-                    crossoverChance = cfgDict.GetIntOrDefault("crossoverChance", 10)
+                    mutationChance = cfgDict.GetDoubleOrDefault("mutationChance", 0.1),
+                    singleFeatureCrossoverChance = cfgDict.GetDoubleOrDefault("singleFeatureCrossoverChance", 0.1),
+                    crossoverChance = cfgDict.GetDoubleOrDefault("crossoverChance", 0.1)
                 };
             }
 
