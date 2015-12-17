@@ -56,7 +56,7 @@ namespace trains
                     Results.Count, TotalSeconds, MinSeconds, MaxSeconds, AvgSeconds, MinResult, MaxResult, AvgResult);
             }
         }
-        static Result Benchmark(Solver solver,
+        static Result Benchmark(ISolver solver,
                                 Problem problem,
                                 int numIterations)
         {
@@ -83,9 +83,9 @@ namespace trains
         static void Main(string[] args)
         {
             Problem problem = Problem.LoadFromFile("../../../input/input_lolwut.txt");
-            Solver.Config solverConfig = Solver.Config.LoadFromFile("../../../input/solver.cfg");
+            DefaultSolver.Config solverConfig = DefaultSolver.Config.LoadFromFile("../../../input/solver.cfg");
             Console.WriteLine("using config:\n" + solverConfig.ToString());
-            Solver solver = new Solver(solverConfig);
+            DefaultSolver solver = new DefaultSolver(solverConfig);
 
             const int BENCHMARK_ITERATIONS = 10;
 

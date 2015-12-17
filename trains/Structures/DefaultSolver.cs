@@ -9,7 +9,7 @@ using trains.Utils;
 
 namespace trains.Structures
 {
-    public class Solver
+    public class DefaultSolver : ISolver
     {
         public struct Config
         {
@@ -53,7 +53,7 @@ namespace trains.Structures
         private IMutation mutation;
         private ICrossover crossover;
 
-        public Solver(Config cfg)
+        public DefaultSolver(Config cfg)
         {
             config = cfg;
             random = new Random();
