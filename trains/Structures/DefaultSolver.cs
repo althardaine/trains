@@ -76,7 +76,7 @@ namespace trains.Structures
                 }
 
                 nextPopulation.AddRange(
-                    specimens.OrderBy(s => Guid.NewGuid())
+                    specimens.Shuffle(random)
                              .Take(specimens.Count / 2)
                              .AsQueryable()
                              .Zip(specimens,
