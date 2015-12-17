@@ -2,7 +2,11 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.RegularExpressions;
+using Microsoft.Win32;
+using MoreLinq;
 using trains.Structures;
+using trains.Utils;
 
 namespace trains
 {
@@ -56,7 +60,7 @@ namespace trains
                     Results.Count, TotalSeconds, MinSeconds, MaxSeconds, AvgSeconds, MinResult, MaxResult, AvgResult);
             }
         }
-        static Result Benchmark(ISolver solver,
+        static Result Benchmark(Solver solver,
                                 Problem problem,
                                 int numIterations)
         {
@@ -83,14 +87,33 @@ namespace trains
         static void Main(string[] args)
         {
             Problem problem = Problem.LoadFromFile("../../../input/input_lolwut.txt");
-            DefaultSolver.Config solverConfig = DefaultSolver.Config.LoadFromFile("../../../input/solver.cfg");
-            Console.WriteLine("using config:\n" + solverConfig.ToString());
-            DefaultSolver solver = new DefaultSolver(solverConfig);
+            Solver.Config solverConfig = Solver.Config.LoadFromFile("../../../input/solver.cfg");
 
-            const int BENCHMARK_ITERATIONS = 10;
+            const int BENCHMARK_ITERATIONS = 100;
 
-            Result result = Benchmark(solver, problem, BENCHMARK_ITERATIONS);
-            Console.WriteLine(result);
+            int[] ITERATIONS = new int[] {10, 100, 1000};
+            int[] POPULATION = new int[] {10, 20, 50, 100};
+            double[] MUTATION = new double[] {0.001, 0.005, 0.01, 0.05, 0.1};
+            double[] CROSSOVER = new double[] {0.001, 0.005, 0.01, 0.05, 0.1};
+
+            ITERATIONS.ForEach(numIterations =>
+                POPULATION.ForEach(populationSize =>
+                    MUTATION.ForEach(mutationChance =>
+                        CROSSOVER.ForEach(crossoverChance =>
+                        {
+                            solverConfig.numberOfIterations = numIterations;
+                            solverConfig.specimenPoolSize = populationSize;
+                            solverConfig.mutationChance = mutationChance;
+                            solverConfig.crossoverChance = crossoverChance;
+
+                            Console.WriteLine("using config:\n" + solverConfig.ToString());
+
+                            Result simpleResult = Benchmark(new SimpleSolver(solverConfig), problem, BENCHMARK_ITERATIONS);
+                            Console.WriteLine("Simple solver: " + simpleResult);
+
+                            Result result = Benchmark(new DefaultSolver(solverConfig), problem, BENCHMARK_ITERATIONS);
+                            Console.WriteLine("Default solver: " + result);
+                        }))));
             Console.ReadLine();
         }
     }
