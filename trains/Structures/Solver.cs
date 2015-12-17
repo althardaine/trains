@@ -29,7 +29,7 @@ namespace trains.Structures
                     .Where(s => !string.IsNullOrWhiteSpace(s) && s[0] != '#');
 
                 var cfgDict = textLines.Select(s => s.Split('='))
-                    .ToDictionary(t => t[0].Trim(), t => t[1].Trim());
+                    .ToDictionary(t => t[0], t => t[1]);
 
                 return new Config()
                 {
