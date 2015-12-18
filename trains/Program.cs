@@ -91,10 +91,10 @@ namespace trains
 
             const int BENCHMARK_ITERATIONS = 100;
 
-            int[] ITERATIONS = new int[] {10, 100, 1000};
-            int[] POPULATION = new int[] {10, 20, 50, 100};
-            double[] MUTATION = new double[] {0.001, 0.005, 0.01, 0.05, 0.1};
-            double[] CROSSOVER = new double[] {0.001, 0.005, 0.01, 0.05, 0.1};
+            int[] ITERATIONS = new int[] { 10, 100, 1000 };
+            int[] POPULATION = new int[] { 10, 20, 50, 100 };
+            double[] MUTATION = new double[] { 0.001, 0.005, 0.01, 0.05, 0.1 };
+            double[] CROSSOVER = new double[] { 0.001, 0.005, 0.01, 0.05, 0.1 };
 
             ITERATIONS.ForEach(numIterations =>
                 POPULATION.ForEach(populationSize =>

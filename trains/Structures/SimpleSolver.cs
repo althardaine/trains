@@ -54,20 +54,24 @@ namespace trains.Structures
         {
             Specimen result = specimen.Clone();
 
-            int from;
             int to;
+            int from = specimen.Distribution
+                .Select((x, idx) => new Tuple<int, int>(idx, x))
+                .Where(_ => _.Item2 != 0)
+                .Shuffle(random)
+                .Select(_ => _.Item1)
+                .Take(1)
+                .Concat(-1)
+                .First();
 
-            do
-            {
-                from = random.Next(specimen.Distribution.Count);
-            } while (specimen.Distribution[from] == 0);
             do
             {
                 to = random.Next(specimen.Distribution.Count);
             } while (to == from);
 
             int severity = random.Next(specimen.Distribution[from]);
-            result.Distribution[from] -= severity;
+            if (from >= 0)
+                result.Distribution[from] -= severity;
             result.Distribution[to] += severity;
 
             return result;
