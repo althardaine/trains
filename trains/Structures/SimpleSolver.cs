@@ -60,7 +60,6 @@ namespace trains.Structures
                 .Where(_ => _.Item2 != 0)
                 .Shuffle(random)
                 .Select(_ => _.Item1)
-                .Take(1)
                 .Concat(-1)
                 .First();
 
@@ -69,9 +68,16 @@ namespace trains.Structures
                 to = random.Next(specimen.Distribution.Count);
             } while (to == from);
 
-            int severity = random.Next(specimen.Distribution[from]);
+            int severity;
             if (from >= 0)
+            {
+                severity = random.Next(specimen.Distribution[from]);
                 result.Distribution[from] -= severity;
+            }
+            else
+            {
+                severity = random.Next(specimen.Problem.NumberOfBuses);
+            }
             result.Distribution[to] += severity;
 
             return result;
